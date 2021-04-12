@@ -24,7 +24,6 @@ contract ArtBlocks is ERC1155, Ownable, ReentrancyGuard {
     Counters.Counter private _blockIDs;
     string internal _metadataBaseURI;
 
-    //WIP: can be used by dapp to show owner of the token or block. Can be replaced to use directly by backend
     mapping(uint256 => address) private _owners;
 
     //WIP: Add owner of painting, any other details if required as well
