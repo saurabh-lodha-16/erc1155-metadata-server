@@ -61,7 +61,11 @@ contract ArtBlocks is ERC1155, Ownable, ReentrancyGuard {
         override
         returns (string memory)
     {
-        //add any check if required
+        // blockId exists in the blockchain
+        require(
+            _owners[_blockID] != address(0),
+            'INVALID_ACTION: No uri present for this block'
+        );
         return
             string(abi.encodePacked(_metadataBaseURI, (_blockID.toString())));
     }
