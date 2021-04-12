@@ -80,6 +80,14 @@ contract ArtBlocks is ERC1155, Ownable, ReentrancyGuard {
         Painting storage painting = _paintings[_paintingID];
         if (painting.blockIDs.length > 0) {
             //painting exists in blockchain
+            
+            require(painting.totalBlocks == _totalBlocks,
+                'INVALID_ACTION: Total blocks of painting not matched with given total blocks'
+            );
+            require(
+                painting.blockNames[_blockName] == 0,
+                'INVALID_ACTION: This block name is already exists'
+            );
             require(
                 painting.blockIDs.length < _totalBlocks,
                 'INVALID_ACTION: All blocks for this painting have been minted'
