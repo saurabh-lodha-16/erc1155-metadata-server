@@ -41,10 +41,17 @@ contract ArtBlocks is ERC1155, Ownable, ReentrancyGuard {
     // paintingID => Painting Details
     mapping(string => Painting) private _paintings;
 
+    // Contract name
+    string public name;
+    // Contract symbol
+    string public symbol;
+
     //lets find other ways to do this something like registry etc.
     //if limits go above uint256 deploy another erc1155. (Confirm)
-    constructor(string memory metadataBaseURI) ERC1155(metadataBaseURI) {
+    constructor(string memory metadataBaseURI, string memory _name, string memory _symbol) ERC1155(metadataBaseURI) {
         _setMetadataBaseURI(metadataBaseURI);
+        name = _name;
+        symbol = _symbol;
     }
 
     function _setMetadataBaseURI(string memory _newMetadataBaseURI)
