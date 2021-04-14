@@ -48,7 +48,11 @@ contract ArtBlocks is ERC1155, Ownable, ReentrancyGuard {
 
     //lets find other ways to do this something like registry etc.
     //if limits go above uint256 deploy another erc1155. (Confirm)
-    constructor(string memory metadataBaseURI, string memory _name, string memory _symbol) ERC1155(metadataBaseURI) {
+    constructor(
+        string memory metadataBaseURI,
+        string memory _name,
+        string memory _symbol
+    ) ERC1155(metadataBaseURI) {
         _setMetadataBaseURI(metadataBaseURI);
         name = _name;
         symbol = _symbol;
@@ -86,17 +90,20 @@ contract ArtBlocks is ERC1155, Ownable, ReentrancyGuard {
         // how can I determine who calls this method i.e who can mint. Add relevant checks here. - TO-DO: Devanshu Sir.
         //add handling so that we don't mint past the limit (maybe frontend can handle it as well) - Done
         //add handling so that we dont mint two of any tokenID (maybe counter should handle it) - Done
+        //add check so we don't mint block for same name in painting - additonal check on blockchain - Done
+        //add proper error messages
 
         Painting storage painting = _paintings[_paintingID];
         if (painting.blockIDs.length > 0) {
             //painting exists in blockchain
-            
-            require(painting.totalBlocks == _totalBlocks,
-                'INVALID_ACTION: Total blocks of painting not matched with given total blocks'
+
+            require(
+                painting.totalBlocks == _totalBlocks,
+                'INVALID_ACTION: Total Blocks for this painting does not match with added Total Blocks'
             );
             require(
                 painting.blockNames[_blockName] == 0,
-                'INVALID_ACTION: This block name is already exists'
+                'INVALID_ACTION: This block name already exists'
             );
             require(
                 painting.blockIDs.length < _totalBlocks,
